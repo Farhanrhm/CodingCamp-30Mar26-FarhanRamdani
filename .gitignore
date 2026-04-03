@@ -1,0 +1,11 @@
+# Mengecualikan file konfigurasi spesifik
+.config.kiro
+
+# Mengecualikan semua file yang berawalan 'test-'
+test-*
+
+# Mengecualikan semua file .md
+*.md
+
+# Memberi pengecualian (negasi) agar README.md tetap dilacak
+!README.md

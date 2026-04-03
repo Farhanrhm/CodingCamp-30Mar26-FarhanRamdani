@@ -1,0 +1,766 @@
+/* Expense & Budget Visualizer Styles */
+/* Requirement 12.1: Single CSS file in css directory */
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 16px; /* Requirement 12.4: At least 14px */
+    line-height: 1.6;
+    color: #1a1a1a; /* Requirement 12.5: Dark text for contrast */
+    background-color: #f0f2f5;
+    padding: 20px;
+}
+
+/* Main Container */
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* ============================================================
+   Balance Section
+   Requirement 12.3: Balance_Display most prominent
+   Requirement 5.4: Positioned at top of interface
+   ============================================================ */
+.balance-section {
+    text-align: center;
+    padding: 36px 30px;
+    background: linear-gradient(135deg, #3d52a0 0%, #5a3e8a 100%);
+    color: #ffffff;
+    border-radius: 10px;
+    margin-bottom: 28px; /* Requirement 12.6: Consistent spacing */
+}
+
+.balance-label {
+    font-size: 18px; /* Requirement 12.4: ≥14px */
+    font-weight: 500;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    /* White on dark purple: contrast ratio ~10:1 — passes 12.5 */
+}
+
+/* Requirement 12.3: Balance amount is the most visually prominent element */
+.balance-amount {
+    font-size: 56px;
+    font-weight: 700;
+    margin-bottom: 22px;
+    letter-spacing: -1px;
+    /* White on dark purple: contrast ratio ~10:1 — passes 12.5 */
+}
+
+/* Requirement 9.2: Warning color for over-limit state */
+.balance-amount.over-limit {
+    color: #ffdd57; /* Bright yellow — contrast ~8:1 on dark purple background */
+    text-shadow: 0 0 12px rgba(255, 221, 87, 0.5);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+}
+
+.balance-amount.over-limit {
+    animation: pulse 1.2s ease-in-out infinite;
+}
+
+/* Spending Limit Input inside balance section */
+.spending-limit-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.spending-limit-controls label {
+    font-size: 15px; /* Requirement 12.4: ≥14px */
+    font-weight: 500;
+    /* White on dark purple: passes 12.5 */
+}
+
+.spending-limit-controls input {
+    padding: 8px 12px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-size: 15px; /* Requirement 12.4: ≥14px */
+    width: 160px;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.spending-limit-controls input::placeholder {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.spending-limit-controls input:focus {
+    outline: none;
+    border-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.25);
+    /* Requirement 14.3: Visible focus indicator */
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+/* ============================================================
+   Notification Area
+   ============================================================ */
+.notification {
+    display: none;
+    padding: 14px 20px;
+    margin-bottom: 20px; /* Requirement 12.6: Consistent spacing */
+    border-radius: 6px;
+    background-color: #1e7e34; /* Dark green — white text contrast ~7:1 */
+    color: #ffffff;
+    font-size: 15px; /* Requirement 12.4: ≥14px */
+    font-weight: 500;
+    text-align: center;
+}
+
+.notification.show {
+    display: block;
+    animation: slideDown 0.3s ease-out;
+}
+
+/* Requirement 9.2: Warning notification color */
+.notification.warning {
+    background-color: #b45309; /* Dark amber — white text contrast ~5.5:1 */
+}
+
+.notification.error {
+    background-color: #b91c1c; /* Dark red — white text contrast ~6:1 */
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Input Section — Transaction Form
+   Requirement 12.6: Consistent spacing
+   ============================================================ */
+.input-section {
+    margin-bottom: 28px; /* Requirement 12.6 */
+}
+
+.input-section h2 {
+    font-size: 22px; /* Requirement 12.4: ≥14px */
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: #1a1a1a; /* Requirement 12.5: contrast on white */
+}
+
+.transaction-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: start;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333333; /* Requirement 12.5: contrast on white ~10:1 */
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px 12px;
+    border: 1.5px solid #9ca3af;
+    border-radius: 6px;
+    font-size: 15px; /* Requirement 12.4: ≥14px */
+    color: #1a1a1a;
+    background-color: #ffffff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Requirement 14.3: Visible focus indicators */
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3d52a0;
+    box-shadow: 0 0 0 3px rgba(61, 82, 160, 0.25);
+}
+
+/* Validation error state */
+.form-group input.error,
+.form-group select.error {
+    border-color: #b91c1c;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.15);
+}
+
+/* Requirement 12.4: error messages ≥14px */
+.error-message {
+    font-size: 14px;
+    color: #b91c1c; /* Dark red — contrast on white ~6:1, passes 12.5 */
+    margin-top: 5px;
+    min-height: 20px;
+    font-weight: 500;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn-primary {
+    padding: 10px 24px;
+    background-color: #3d52a0;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px; /* Requirement 12.4: ≥14px */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    align-self: end;
+    white-space: nowrap;
+}
+
+.btn-primary:hover {
+    background-color: #2e3f7f;
+}
+
+/* Requirement 14.3: Visible focus indicator */
+.btn-primary:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(61, 82, 160, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+.btn-primary:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+/* ============================================================
+   Controls Section — Sort & View
+   Requirement 12.6: Consistent spacing
+   ============================================================ */
+.controls-section {
+    display: flex;
+    gap: 28px;
+    margin-bottom: 28px; /* Requirement 12.6 */
+    padding: 20px;
+    background-color: #f8f9fb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+
+.sort-controls,
+.view-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sort-controls h3,
+.view-controls h3 {
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+    font-weight: 700;
+    color: #374151; /* Requirement 12.5: contrast on light bg ~9:1 */
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-sort,
+.btn-view {
+    padding: 8px 18px;
+    background-color: #ffffff;
+    color: #1a1a1a; /* Requirement 12.5: contrast on white ~16:1 */
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-sort:hover,
+.btn-view:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+/* Requirement 14.3: Visible focus indicators */
+.btn-sort:focus,
+.btn-view:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(61, 82, 160, 0.3);
+}
+
+.btn-sort.active,
+.btn-view.active {
+    background-color: #3d52a0;
+    color: #ffffff; /* White on dark blue ~8:1 — passes 12.5 */
+    border-color: #3d52a0;
+}
+
+.month-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.month-selector label {
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+    font-weight: 600;
+    color: #374151;
+}
+
+.month-selector select {
+    padding: 8px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+    color: #1a1a1a;
+    background-color: #ffffff;
+}
+
+.month-selector select:focus {
+    outline: none;
+    border-color: #3d52a0;
+    box-shadow: 0 0 0 3px rgba(61, 82, 160, 0.25);
+}
+
+/* ============================================================
+   Transaction Section
+   Requirement 3.2: Scrollable transaction list
+   Requirement 12.6: Consistent spacing
+   ============================================================ */
+.transaction-section {
+    margin-bottom: 28px; /* Requirement 12.6 */
+}
+
+.transaction-section h2 {
+    font-size: 22px; /* Requirement 12.4: ≥14px */
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+}
+
+/* Requirement 3.2: Vertical scrolling when list exceeds visible area */
+.transaction-list {
+    list-style: none;
+    max-height: 420px;
+    overflow-y: auto;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #fafafa;
+    /* Custom scrollbar for modern browsers */
+    scrollbar-width: thin;
+    scrollbar-color: #9ca3af #f3f4f6;
+}
+
+.transaction-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.transaction-list::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 3px;
+}
+
+.transaction-list::-webkit-scrollbar-thumb {
+    background-color: #9ca3af;
+    border-radius: 3px;
+}
+
+.empty-state {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+    color: #6b7280; /* Requirement 12.5: contrast on white ~4.6:1 */
+    font-size: 15px; /* Requirement 12.4: ≥14px */
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 10px; /* Requirement 12.6: Consistent spacing */
+    transition: box-shadow 0.2s;
+}
+
+.transaction-item:last-child {
+    margin-bottom: 0;
+}
+
+.transaction-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.transaction-info {
+    flex: 1;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.transaction-name {
+    font-weight: 600;
+    font-size: 15px; /* Requirement 12.4: ≥14px */
+    color: #1a1a1a; /* Requirement 12.5: contrast on white ~16:1 */
+    min-width: 140px;
+}
+
+.transaction-amount {
+    font-weight: 700;
+    font-size: 16px; /* Requirement 12.4: ≥14px */
+    color: #1e4d8c; /* Dark blue — contrast on white ~7:1, passes 12.5 */
+    min-width: 80px;
+}
+
+/* Category badges */
+.transaction-category {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Food: #FF6B6B bg — white text contrast ~3.1:1 (fails AA for normal text)
+   Use darker shade to achieve ≥4.5:1 — Requirement 12.5 */
+.transaction-category.Food {
+    background-color: #c0392b; /* Dark red — white text ~5.1:1 */
+}
+
+/* Transport: #4ECDC4 bg — white text contrast ~2.8:1 (fails)
+   Use darker teal — Requirement 12.5 */
+.transaction-category.Transport {
+    background-color: #0e7490; /* Dark teal — white text ~5.2:1 */
+}
+
+/* Fun: yellow bg — dark text needed for contrast — Requirement 12.5 */
+.transaction-category.Fun {
+    background-color: #b45309; /* Dark amber — white text ~5.5:1 */
+}
+
+.transaction-date {
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+    color: #6b7280; /* Requirement 12.5: contrast on white ~4.6:1 */
+}
+
+.btn-delete {
+    padding: 7px 14px;
+    background-color: #b91c1c; /* Dark red — white text ~6:1, passes 12.5 */
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+    margin-left: 12px;
+}
+
+.btn-delete:hover {
+    background-color: #991b1b;
+}
+
+/* Requirement 14.3: Visible focus indicator */
+.btn-delete:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.35);
+}
+
+/* ============================================================
+   Chart Section
+   Requirement 6.1, 6.5: Chart canvas and legend
+   Requirement 12.6: Consistent spacing
+   ============================================================ */
+.chart-section {
+    margin-bottom: 28px; /* Requirement 12.6 */
+}
+
+.chart-section h2 {
+    font-size: 22px; /* Requirement 12.4: ≥14px */
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    position: relative;
+    background-color: #fafafa;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+#spendingChart {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.chart-empty-state {
+    display: none;
+    text-align: center;
+    color: #6b7280;
+    font-size: 15px; /* Requirement 12.4: ≥14px */
+}
+
+/* Chart legend — Requirement 6.5 */
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin-top: 18px; /* Requirement 12.6: Consistent spacing */
+    flex-wrap: wrap;
+    padding: 14px;
+    background-color: #f8f9fb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+    color: #1a1a1a; /* Requirement 12.5: contrast on light bg */
+}
+
+.legend-color {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* legend-label used by ChartComponent._drawLegend */
+.legend-label {
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+/* Accessible text description below chart — Requirement 14.5 */
+.chart-description {
+    margin-top: 14px; /* Requirement 12.6 */
+    padding: 14px 16px;
+    background-color: #f8f9fb;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+    color: #374151; /* Requirement 12.5: contrast on light bg ~9:1 */
+    line-height: 1.5;
+}
+
+/* ============================================================
+   Monthly Summary Section
+   Requirement 12.6: Consistent spacing
+   ============================================================ */
+.monthly-summary-section {
+    margin-bottom: 28px; /* Requirement 12.6 */
+}
+
+.monthly-summary-section h2 {
+    font-size: 22px; /* Requirement 12.4: ≥14px */
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+}
+
+.month-group {
+    margin-bottom: 24px; /* Requirement 12.6 */
+    padding: 20px;
+    background-color: #f8f9fb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.month-header {
+    font-size: 18px; /* Requirement 12.4: ≥14px */
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+}
+
+.month-total {
+    font-size: 16px; /* Requirement 12.4: ≥14px */
+    font-weight: 600;
+    color: #1e4d8c; /* Dark blue — contrast on light bg ~7:1 */
+    margin-bottom: 10px;
+}
+
+.month-categories {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 14px;
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+    color: #374151;
+    flex-wrap: wrap;
+}
+
+.category-amount {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+}
+
+.month-filter-btn {
+    margin-top: 10px;
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+}
+
+.month-filter-btn.active {
+    background-color: #3d52a0;
+    color: #ffffff;
+    border-color: #3d52a0;
+}
+
+#backToAllBtn {
+    font-size: 14px; /* Requirement 12.4: ≥14px */
+    vertical-align: middle;
+}
+
+/* ============================================================
+   Responsive Design
+   ============================================================ */
+@media (max-width: 768px) {
+    body {
+        padding: 12px;
+    }
+
+    .app-container {
+        padding: 20px 16px;
+    }
+
+    .balance-amount {
+        font-size: 40px;
+    }
+
+    .transaction-form {
+        grid-template-columns: 1fr;
+    }
+
+    .controls-section {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .transaction-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .chart-legend {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .month-categories {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+/* ============================================================
+   Accessibility — Focus Indicators
+   Requirement 14.3: Visible focus indicators for all interactive elements
+   Using :focus-visible for keyboard-only focus rings (no ring on mouse click)
+   Fallback :focus rules kept for browsers without :focus-visible support
+   ============================================================ */
+
+/* Global fallback: never fully suppress outlines */
+:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+/* Keyboard-visible focus ring for all interactive elements */
+:focus-visible {
+    outline: 3px solid #3d52a0;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Override for elements that use box-shadow focus style */
+.form-group input:focus-visible,
+.form-group select:focus-visible {
+    outline: none;
+    border-color: #3d52a0;
+    box-shadow: 0 0 0 3px rgba(61, 82, 160, 0.35);
+}
+
+.btn-primary:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(61, 82, 160, 0.5);
+}
+
+.btn-sort:focus-visible,
+.btn-view:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(61, 82, 160, 0.4);
+}
+
+.btn-delete:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.45);
+}
+
+.spending-limit-controls input:focus-visible {
+    outline: none;
+    border-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+.month-selector select:focus-visible {
+    outline: none;
+    border-color: #3d52a0;
+    box-shadow: 0 0 0 3px rgba(61, 82, 160, 0.3);
+}
+
+/* ============================================================
+   Accessibility — Screen Reader Only
+   ============================================================ */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
